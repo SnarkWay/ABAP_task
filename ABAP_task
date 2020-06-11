@@ -1,0 +1,11 @@
+DATA(sentence) = `ABАP is excellent `.
+DATA len Type i.
+DATA test(10) type c.
+    SPLIT sentence AT space INTO TABLE DATA(words).
+    write: 'Number of words', lines( words ).
+    LOOP AT words INTO test.
+    len = strlen( test ).
+    DATA(letters) = VALUE ABAP_SORTORDER_tab( FOR char = 0 THEN char + 1 UNTIL char = len ( name = test+char(1) ) ).
+          Select distinct * FROM @letters as letters into TABLE @DATA(unique_letters).
+    WRITE : / 'Number of unique characters in the word:', test,  '-', lines( unique_letters ).
+    ENDLOOP.
